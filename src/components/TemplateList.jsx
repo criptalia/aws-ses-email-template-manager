@@ -1,55 +1,56 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Avatar from "@material-ui/core/Avatar";
-import BeachAccessIcon from "@material-ui/icons/BeachAccess";
-import DeleteIcon from "@material-ui/icons/DeleteTwoTone";
-import Typography from "@material-ui/core/Typography";
-
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
 import {
+  List,
+  ListItem,
+  ListItemText,
   ListSubheader,
+  ListItemAvatar,
   ListItemSecondaryAction,
-  IconButton,
+  Avatar,
+  Typography,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions,
   Button,
-  ListItemAvatar
-} from "@material-ui/core";
+  IconButton,
+} from '@material-ui/core'
+import {
+  BeachAccess as BeachAccessIcon,
+  DeleteTwoTone as DeleteIcon,
+} from '@material-ui/icons'
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    width: "100%",
-    backgroundColor: theme.palette.background.paper
-  }
-});
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+  },
+})
 
 class TemplateList extends Component {
   state = {
     open: false,
-    selectedToDelete: null
-  };
+    selectedToDelete: null,
+  }
 
-  handleClickOpen = templateName => {
-    this.setState({ open: true, selectedToDelete: templateName });
-  };
+  handleClickOpen = (templateName) => {
+    this.setState({ open: true, selectedToDelete: templateName })
+  }
 
   handleClose = () => {
-    this.setState({ open: false, selectedToDelete: null });
-  };
+    this.setState({ open: false, selectedToDelete: null })
+  }
 
   showListItems = (items, onClickListItem, selectedListItem) => {
     if (items.length === 0) {
       return (
-        <Typography variant="body2" color="textSecondary" align="center">
-          {"No templates found."}
+        <Typography variant='body2' color='textSecondary' align='center'>
+          {'No templates found.'}
         </Typography>
-      );
+      )
     }
 
     return items.map((item, index) => {
@@ -70,51 +71,49 @@ class TemplateList extends Component {
             secondary={
               item.CreatedTimestamp
                 ? item.CreatedTimestamp.toString()
-                : "Just now"
+                : 'Just now'
             }
           />
           <ListItemSecondaryAction>
             <IconButton
-              aria-label="Delete"
+              aria-label='Delete'
               onClick={() => this.handleClickOpen(item.Name)}
             >
               <DeleteIcon />
             </IconButton>
           </ListItemSecondaryAction>
         </ListItem>
-      );
-    });
-  };
+      )
+    })
+  }
 
-  resolved = templateName => {
-    const { removeTemplate } = this.props;
+  resolved = (templateName) => {
+    const { removeTemplate } = this.props
 
-    this.setState({ open: false });
+    this.setState({ open: false })
 
-    removeTemplate(templateName);
-  };
+    removeTemplate(templateName)
+  }
 
-  rejected = () => {};
+  rejected = () => {}
 
-  handleOnDeleteClick = async templateName => {
-    const { onDeleteListItem } = this.props;
+  handleOnDeleteClick = async (templateName) => {
+    const { onDeleteListItem } = this.props
 
     await onDeleteListItem(templateName).then(
       this.resolved(templateName),
-      this.rejected
-    );
-  };
+      this.rejected,
+    )
+  }
 
   render() {
-    const { classes, items, selectedListItem, onClickListItem } = this.props;
-    const { open, selectedToDelete } = this.state;
+    const { classes, items, selectedListItem, onClickListItem } = this.props
+    const { open, selectedToDelete } = this.state
 
     return (
       <div>
         <List
-          subheader={
-            <ListSubheader>AWS SES Templates List</ListSubheader>
-          }
+          subheader={<ListSubheader>AWS SES Templates List</ListSubheader>}
           className={classes.root}
         >
           {this.showListItems(items, onClickListItem, selectedListItem)}
@@ -122,21 +121,22 @@ class TemplateList extends Component {
         <Dialog
           open={open}
           onClose={this.handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
         >
-          <DialogTitle id="alert-dialog-title">
+          <DialogTitle id='alert-dialog-title'>
             {`Are you sure you want to delete "${selectedToDelete}"?`}
           </DialogTitle>
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Please check and if necessary make a backup copy. This action is not reversible!
+            <DialogContentText id='alert-dialog-description'>
+              Please check and if necessary make a backup copy. This action is
+              not reversible!
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button
               onClick={() => this.handleOnDeleteClick(selectedToDelete)}
-              color="primary"
+              color='primary'
               autoFocus
             >
               DELETE TEMPLATE
@@ -145,12 +145,12 @@ class TemplateList extends Component {
           </DialogActions>
         </Dialog>
       </div>
-    );
+    )
   }
 }
 
 TemplateList.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+  classes: PropTypes.object.isRequired,
+}
 
-export default withStyles(styles)(TemplateList);
+export default withStyles(styles)(TemplateList)

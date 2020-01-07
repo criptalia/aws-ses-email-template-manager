@@ -1,5 +1,5 @@
-import React, { PureComponent, Fragment } from "react"
-import PropTypes from "prop-types"
+import React, { PureComponent, Fragment } from 'react'
+import PropTypes from 'prop-types'
 import {
   TextField,
   Typography,
@@ -16,29 +16,29 @@ import {
   Switch,
   InputLabel,
   Paper,
-  FormControlLabel
-} from "@material-ui/core"
-import { Check as CheckIcon, Save as SaveIcon } from "@material-ui/icons"
-import AceEditor from "react-ace"
+  FormControlLabel,
+} from '@material-ui/core'
+import { Check as CheckIcon, Save as SaveIcon } from '@material-ui/icons'
+import AceEditor from 'react-ace'
 
-import "brace/mode/html"
-import "brace/theme/monokai"
+import 'brace/mode/html'
+import 'brace/theme/monokai'
 
-import styles from "./TemplateFormStyles"
+import styles from './TemplateFormStyles'
 
-const LABEL_PREVIEW = "Preview"
+const LABEL_PREVIEW = 'Preview'
 
 class TemplateForm extends PureComponent {
   state = {
     template: {
-      TemplateName: "",
-      SubjectPart: "",
-      TextPart: "",
-      HtmlPart: ""
+      TemplateName: '',
+      SubjectPart: '',
+      TextPart: '',
+      HtmlPart: '',
     },
     open: false,
     modalFullWidth: true,
-    modalMaxWidth: "md",
+    modalMaxWidth: 'md',
     wrap: true,
   }
 
@@ -51,22 +51,22 @@ class TemplateForm extends PureComponent {
           TemplateName: template.TemplateName,
           SubjectPart: template.SubjectPart,
           TextPart: template.TextPart,
-          HtmlPart: template.HtmlPart
-        }
+          HtmlPart: template.HtmlPart,
+        },
       })
     }
   }
 
-  handleChange = name => event => {
+  handleChange = (name) => (event) => {
     const { template } = this.state
     this.setState({
       template: Object.assign({}, template, {
-        [name]: name === "HtmlPart" ? event : event.target.value
-      })
+        [name]: name === 'HtmlPart' ? event : event.target.value,
+      }),
     })
   }
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     event.preventDefault()
 
     const { onSubmit } = this.props
@@ -83,21 +83,21 @@ class TemplateForm extends PureComponent {
     this.setState({ open: false })
   }
 
-  handleMaxWidthChange = event => {
+  handleMaxWidthChange = (event) => {
     this.setState({
-      modalMaxWidth: event.target.value
+      modalMaxWidth: event.target.value,
     })
   }
 
-  handleFullWidthChange = event => {
+  handleFullWidthChange = (event) => {
     this.setState({
-      modalFullWidth: event.target.checked
+      modalFullWidth: event.target.checked,
     })
   }
 
   toggleWrap = () => {
     this.setState({
-      wrap: !this.state.wrap
+      wrap: !this.state.wrap,
     })
   }
 
@@ -107,82 +107,84 @@ class TemplateForm extends PureComponent {
       isCreate,
       loadingSubmit,
       success,
-      errorMessage
+      errorMessage,
     } = this.props
     const { template, modalFullWidth, modalMaxWidth } = this.state
 
     return (
       <Fragment>
-        <form onSubmit={e => this.handleSubmit(e)}>
+        <form onSubmit={(e) => this.handleSubmit(e)}>
           <TextField
-            id="outlined-name"
-            label="TemplateName"
+            id='outlined-name'
+            label='TemplateName'
             className={classes.textField}
             value={template.TemplateName}
-            margin="normal"
-            variant="outlined"
-            placeholder="template-name"
-            onChange={this.handleChange("TemplateName")}
+            margin='normal'
+            variant='outlined'
+            placeholder='template-name'
+            onChange={this.handleChange('TemplateName')}
             required
             disabled={!isCreate}
           />
           <TextField
-            id="outlined-name"
-            label="SubjectPart"
+            id='outlined-name'
+            label='SubjectPart'
             className={classes.textField}
             value={template.SubjectPart}
-            margin="normal"
-            variant="outlined"
-            placeholder="Hi {{name}}!"
-            onChange={this.handleChange("SubjectPart")}
+            margin='normal'
+            variant='outlined'
+            placeholder='Hi {{name}}!'
+            onChange={this.handleChange('SubjectPart')}
             required
           />
           <TextField
-            id="outlined-name"
-            label="TextPart"
+            id='outlined-name'
+            label='TextPart'
             className={classes.textField}
             value={template.TextPart}
-            margin="normal"
-            variant="outlined"
-            onChange={this.handleChange("TextPart")}
-            rowsMax="6"
+            margin='normal'
+            variant='outlined'
+            onChange={this.handleChange('TextPart')}
+            rowsMax='6'
             multiline
           />
           <div
             style={{
               marginTop: 5,
-              display: "flex",
-              justifyContent: "flex-end"
+              display: 'flex',
+              justifyContent: 'flex-end',
             }}
           >
             <FormControlLabel
-              control={<Switch checked={this.state.wrap} onChange={this.toggleWrap} />}
-              label="Wrap"
+              control={
+                <Switch checked={this.state.wrap} onChange={this.toggleWrap} />
+              }
+              label='Wrap'
             />
             <Button onClick={this.handlePreviewOpen}>{LABEL_PREVIEW}</Button>
           </div>
           <AceEditor
             className={classes.aceEditor}
-            mode="html"
-            theme="monokai"
-            onChange={this.handleChange("HtmlPart")}
-            name="HtmlPart"
+            mode='html'
+            theme='monokai'
+            onChange={this.handleChange('HtmlPart')}
+            name='HtmlPart'
             value={template.HtmlPart}
-            width="100%"
+            width='100%'
             fontSize={12}
             setOptions={{
               enableBasicAutocompletion: true,
               showLineNumbers: true,
               tabSize: 2,
               wrap: this.state.wrap,
-              }}
+            }}
           />
           <div className={classes.buttonContainer}>
-            <Typography className={classes.errorMessage} variant="subtitle2">
+            <Typography className={classes.errorMessage} variant='subtitle2'>
               {errorMessage}
             </Typography>
             <div className={classes.wrapper}>
-              <Fab color="primary" type="submit">
+              <Fab color='primary' type='submit'>
                 {success ? <CheckIcon /> : <SaveIcon />}
               </Fab>
               {loadingSubmit && (
@@ -196,7 +198,7 @@ class TemplateForm extends PureComponent {
           maxWidth={modalMaxWidth}
           open={this.state.open}
           onClose={this.handlePreviewClose}
-          aria-labelledby="preview-email-dialog"
+          aria-labelledby='preview-email-dialog'
         >
           <DialogContent>
             <DialogContentText>
@@ -204,21 +206,21 @@ class TemplateForm extends PureComponent {
             </DialogContentText>
             <form className={classes.form} noValidate>
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="max-width">Width</InputLabel>
+                <InputLabel htmlFor='max-width'>Width</InputLabel>
                 <Select
                   value={modalMaxWidth}
                   onChange={this.handleMaxWidthChange}
                   inputProps={{
-                    name: "max-width",
-                    id: "max-width"
+                    name: 'max-width',
+                    id: 'max-width',
                   }}
                 >
                   <MenuItem value={false}>false</MenuItem>
-                  <MenuItem value="xs">xs</MenuItem>
-                  <MenuItem value="sm">sm</MenuItem>
-                  <MenuItem value="md">md</MenuItem>
-                  <MenuItem value="lg">lg</MenuItem>
-                  <MenuItem value="xl">xl</MenuItem>
+                  <MenuItem value='xs'>xs</MenuItem>
+                  <MenuItem value='sm'>sm</MenuItem>
+                  <MenuItem value='md'>md</MenuItem>
+                  <MenuItem value='lg'>lg</MenuItem>
+                  <MenuItem value='xl'>xl</MenuItem>
                 </Select>
               </FormControl>
               <FormControlLabel
@@ -227,13 +229,13 @@ class TemplateForm extends PureComponent {
                   <Switch
                     checked={modalFullWidth}
                     onChange={this.handleFullWidthChange}
-                    value="fullWidth"
+                    value='fullWidth'
                   />
                 }
-                label="Full width"
+                label='Full width'
               />
             </form>
-            <Paper style={{ padding: "10px 20px 20px 20px" }}>
+            <Paper style={{ padding: '10px 20px 20px 20px' }}>
               <div dangerouslySetInnerHTML={{ __html: template.HtmlPart }} />
             </Paper>
           </DialogContent>
@@ -244,7 +246,7 @@ class TemplateForm extends PureComponent {
 }
 
 TemplateForm.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(TemplateForm)
