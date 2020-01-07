@@ -14,8 +14,8 @@ const FORM_STATUS = Object.freeze({
   EDIT: "EDIT"
 });
 
-const LABEL_CREATE_TEMPLATE = "Crear Template";
-const LABEL_EDIT_TEMPLATE = "Editar Template";
+const LABEL_CREATE_TEMPLATE = "Create Template";
+const LABEL_EDIT_TEMPLATE = "Edit Template";
 
 class SaveTemplate extends PureComponent {
   state = {

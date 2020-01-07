@@ -1,5 +1,5 @@
-import React, { PureComponent, Fragment } from "react";
-import PropTypes from "prop-types";
+import React, { PureComponent, Fragment } from "react"
+import PropTypes from "prop-types"
 import {
   TextField,
   Typography,
@@ -17,16 +17,16 @@ import {
   InputLabel,
   Paper,
   FormControlLabel
-} from "@material-ui/core";
-import { Check as CheckIcon, Save as SaveIcon } from "@material-ui/icons";
-import AceEditor from "react-ace";
+} from "@material-ui/core"
+import { Check as CheckIcon, Save as SaveIcon } from "@material-ui/icons"
+import AceEditor from "react-ace"
 
-import "brace/mode/html";
-import "brace/theme/monokai";
+import "brace/mode/html"
+import "brace/theme/monokai"
 
-import styles from "./TemplateFormStyles";
+import styles from "./TemplateFormStyles"
 
-const LABEL_PREVIEW = "Previsualizar";
+const LABEL_PREVIEW = "Preview"
 
 class TemplateForm extends PureComponent {
   state = {
@@ -38,11 +38,12 @@ class TemplateForm extends PureComponent {
     },
     open: false,
     modalFullWidth: true,
-    modalMaxWidth: "sm"
-  };
+    modalMaxWidth: "md",
+    wrap: true,
+  }
 
   componentWillReceiveProps(nextProps) {
-    const { template } = nextProps;
+    const { template } = nextProps
 
     if (template) {
       this.setState({
@@ -52,47 +53,53 @@ class TemplateForm extends PureComponent {
           TextPart: template.TextPart,
           HtmlPart: template.HtmlPart
         }
-      });
+      })
     }
   }
 
   handleChange = name => event => {
-    const { template } = this.state;
+    const { template } = this.state
     this.setState({
       template: Object.assign({}, template, {
         [name]: name === "HtmlPart" ? event : event.target.value
       })
-    });
-  };
+    })
+  }
 
   handleSubmit = async event => {
-    event.preventDefault();
+    event.preventDefault()
 
-    const { onSubmit } = this.props;
-    const { template } = this.state;
+    const { onSubmit } = this.props
+    const { template } = this.state
 
-    onSubmit(template);
-  };
+    onSubmit(template)
+  }
 
   handlePreviewOpen = () => {
-    this.setState({ open: true });
-  };
+    this.setState({ open: true })
+  }
 
   handlePreviewClose = () => {
-    this.setState({ open: false });
-  };
+    this.setState({ open: false })
+  }
 
   handleMaxWidthChange = event => {
     this.setState({
       modalMaxWidth: event.target.value
-    });
-  };
+    })
+  }
 
   handleFullWidthChange = event => {
     this.setState({
       modalFullWidth: event.target.checked
-    });
-  };
+    })
+  }
+
+  toggleWrap = () => {
+    this.setState({
+      wrap: !this.state.wrap
+    })
+  }
 
   render() {
     const {
@@ -101,8 +108,8 @@ class TemplateForm extends PureComponent {
       loadingSubmit,
       success,
       errorMessage
-    } = this.props;
-    const { template, modalFullWidth, modalMaxWidth } = this.state;
+    } = this.props
+    const { template, modalFullWidth, modalMaxWidth } = this.state
 
     return (
       <Fragment>
@@ -114,7 +121,7 @@ class TemplateForm extends PureComponent {
             value={template.TemplateName}
             margin="normal"
             variant="outlined"
-            placeholder="MiNuevoTemplate"
+            placeholder="template-name"
             onChange={this.handleChange("TemplateName")}
             required
             disabled={!isCreate}
@@ -126,7 +133,7 @@ class TemplateForm extends PureComponent {
             value={template.SubjectPart}
             margin="normal"
             variant="outlined"
-            placeholder="Saludos, {{name}}!"
+            placeholder="Hi {{name}}!"
             onChange={this.handleChange("SubjectPart")}
             required
           />
@@ -138,17 +145,20 @@ class TemplateForm extends PureComponent {
             margin="normal"
             variant="outlined"
             onChange={this.handleChange("TextPart")}
+            rowsMax="6"
+            multiline
           />
           <div
             style={{
               marginTop: 5,
               display: "flex",
-              justifyContent: "space-between"
+              justifyContent: "flex-end"
             }}
           >
-            <Typography variant="subtitle2" gutterBottom>
-              {"HtmlPart"}
-            </Typography>
+            <FormControlLabel
+              control={<Switch checked={this.state.wrap} onChange={this.toggleWrap} />}
+              label="Wrap"
+            />
             <Button onClick={this.handlePreviewOpen}>{LABEL_PREVIEW}</Button>
           </div>
           <AceEditor
@@ -157,10 +167,15 @@ class TemplateForm extends PureComponent {
             theme="monokai"
             onChange={this.handleChange("HtmlPart")}
             name="HtmlPart"
-            editorProps={{ $blockScrolling: true }}
             value={template.HtmlPart}
-            width="612"
-            fontSize={14}
+            width="100%"
+            fontSize={12}
+            setOptions={{
+              enableBasicAutocompletion: true,
+              showLineNumbers: true,
+              tabSize: 2,
+              wrap: this.state.wrap,
+              }}
           />
           <div className={classes.buttonContainer}>
             <Typography className={classes.errorMessage} variant="subtitle2">
@@ -185,12 +200,11 @@ class TemplateForm extends PureComponent {
         >
           <DialogContent>
             <DialogContentText>
-              Puedes cambiar el tamaño del diálogo que se ajuste a cada
-              dispositivo:
+              You can change the size of the dialog to suit different devices:
             </DialogContentText>
             <form className={classes.form} noValidate>
               <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="max-width">Ancho del diálogo</InputLabel>
+                <InputLabel htmlFor="max-width">Width</InputLabel>
                 <Select
                   value={modalMaxWidth}
                   onChange={this.handleMaxWidthChange}
@@ -225,12 +239,12 @@ class TemplateForm extends PureComponent {
           </DialogContent>
         </Dialog>
       </Fragment>
-    );
+    )
   }
 }
 
 TemplateForm.propTypes = {
   classes: PropTypes.object.isRequired
-};
+}
 
-export default withStyles(styles)(TemplateForm);
+export default withStyles(styles)(TemplateForm)

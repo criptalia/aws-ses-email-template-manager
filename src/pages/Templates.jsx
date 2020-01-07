@@ -22,7 +22,7 @@ const FORM_STATUS = Object.freeze({
   EDIT: "EDIT"
 });
 
-const LABEL_ADD_TEMPLATE = "Agregar Template";
+const LABEL_ADD_TEMPLATE = "New Template";
 
 class Templates extends PureComponent {
   state = {
@@ -108,7 +108,7 @@ class Templates extends PureComponent {
     const { templates, selectedListItem, nextToken } = this.state;
     return (
       <Fragment>
-        <Title>Templates de Email</Title>
+        <Title>Your templates</Title>
         <div className={classes.buttonContainer}>
           <Tooltip title={LABEL_ADD_TEMPLATE} aria-label="Add">
             <Link to="/templates/new">
@@ -126,7 +126,7 @@ class Templates extends PureComponent {
             useWindow={false}
             loader={
               <div className="loader" key={0}>
-                Cargando...
+                Loading...
               </div>
             }
           >

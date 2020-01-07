@@ -47,7 +47,7 @@ class TemplateList extends Component {
     if (items.length === 0) {
       return (
         <Typography variant="body2" color="textSecondary" align="center">
-          {"No encotramos ningún template de email."}
+          {"No templates found."}
         </Typography>
       );
     }
@@ -70,7 +70,7 @@ class TemplateList extends Component {
             secondary={
               item.CreatedTimestamp
                 ? item.CreatedTimestamp.toString()
-                : "Justo ahora"
+                : "Just now"
             }
           />
           <ListItemSecondaryAction>
@@ -113,7 +113,7 @@ class TemplateList extends Component {
       <div>
         <List
           subheader={
-            <ListSubheader>Lista de Templates de AWS SES</ListSubheader>
+            <ListSubheader>AWS SES Templates List</ListSubheader>
           }
           className={classes.root}
         >
@@ -126,11 +126,11 @@ class TemplateList extends Component {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {`¿Desea eliminar el template "${selectedToDelete}"?`}
+            {`Are you sure you want to delete "${selectedToDelete}"?`}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Revise bien antes de eliminar porque no habrá vuelta atrás!
+              Please check and if necessary make a backup copy. This action is not reversible!
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -139,9 +139,9 @@ class TemplateList extends Component {
               color="primary"
               autoFocus
             >
-              Aceptar
+              DELETE TEMPLATE
             </Button>
-            <Button onClick={this.handleClose}>Cancelar</Button>
+            <Button onClick={this.handleClose}>Cancel</Button>
           </DialogActions>
         </Dialog>
       </div>

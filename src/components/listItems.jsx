@@ -20,12 +20,12 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Otras opciones</ListSubheader>
+    <ListSubheader inset>Other options</ListSubheader>
     <ListItem button>
       <ListItemIcon>
         <LogoutIcon />
       </ListItemIcon>
-      <ListItemText primary="Cerrar Sesión" />
+      <ListItemText primary="Close session" />
     </ListItem>
   </div>
 );
