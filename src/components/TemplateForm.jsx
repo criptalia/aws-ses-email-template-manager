@@ -27,6 +27,7 @@ import 'brace/theme/monokai'
 import styles from './TemplateFormStyles'
 
 const LABEL_PREVIEW = 'Preview'
+const DEFAULT_FONT_SIZE = 12
 
 class TemplateForm extends PureComponent {
   state = {
@@ -40,6 +41,7 @@ class TemplateForm extends PureComponent {
     modalFullWidth: true,
     modalMaxWidth: 'md',
     wrap: true,
+    fontSize: DEFAULT_FONT_SIZE,
   }
 
   componentWillReceiveProps(nextProps) {
@@ -98,6 +100,24 @@ class TemplateForm extends PureComponent {
   toggleWrap = () => {
     this.setState({
       wrap: !this.state.wrap,
+    })
+  }
+
+  increaseFontSize = () => {
+    this.setState({
+      fontSize: this.fontSize++,
+    })
+  }
+
+  decreaseFontSize = () => {
+    this.setState({
+      fontSize: this.fontSize--,
+    })
+  }
+
+  defaultFontSize = () => {
+    this.setState({
+      fontSize: this.DEFAULT_FONT_SIZE,
     })
   }
 
@@ -161,6 +181,9 @@ class TemplateForm extends PureComponent {
               }
               label='Wrap'
             />
+            <Button onClick={this.decreaseFontSize}>-</Button>
+            <Button onClick={this.defaultFontSize}>A</Button>
+            <Button onClick={this.increaseFontSize}>+</Button>
             <Button onClick={this.handlePreviewOpen}>{LABEL_PREVIEW}</Button>
           </div>
           <AceEditor
@@ -171,7 +194,7 @@ class TemplateForm extends PureComponent {
             name='HtmlPart'
             value={template.HtmlPart}
             width='100%'
-            fontSize={12}
+            fontSize={this.state.fontSize}
             setOptions={{
               enableBasicAutocompletion: true,
               showLineNumbers: true,
