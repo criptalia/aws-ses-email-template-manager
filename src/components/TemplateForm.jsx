@@ -7,23 +7,14 @@ import {
   Fab,
   withStyles,
   Button,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  Select,
-  FormControl,
-  MenuItem,
   Switch,
-  InputLabel,
-  Paper,
   FormControlLabel,
 } from '@material-ui/core'
 import { Check as CheckIcon, Save as SaveIcon } from '@material-ui/icons'
+import TemplateView from './TemplateView'
 import AceEditor from 'react-ace'
-
 import 'brace/mode/html'
 import 'brace/theme/monokai'
-
 import styles from './TemplateFormStyles'
 
 const LABEL_PREVIEW = 'Preview'
@@ -39,7 +30,6 @@ class TemplateForm extends PureComponent {
     },
     open: false,
     modalFullWidth: true,
-    modalMaxWidth: 'md',
     wrap: true,
     fontSize: DEFAULT_FONT_SIZE,
   }
@@ -85,18 +75,6 @@ class TemplateForm extends PureComponent {
     this.setState({ open: false })
   }
 
-  handleMaxWidthChange = (event) => {
-    this.setState({
-      modalMaxWidth: event.target.value,
-    })
-  }
-
-  handleFullWidthChange = (event) => {
-    this.setState({
-      modalFullWidth: event.target.checked,
-    })
-  }
-
   toggleWrap = () => {
     this.setState({
       wrap: !this.state.wrap,
@@ -129,8 +107,7 @@ class TemplateForm extends PureComponent {
       success,
       errorMessage,
     } = this.props
-    const { template, modalFullWidth, modalMaxWidth } = this.state
-
+    const { template } = this.state
     return (
       <Fragment>
         <form onSubmit={(e) => this.handleSubmit(e)}>
@@ -216,53 +193,12 @@ class TemplateForm extends PureComponent {
             </div>
           </div>
         </form>
-        <Dialog
-          fullWidth={modalFullWidth}
-          maxWidth={modalMaxWidth}
+        <TemplateView
+          template={template}
+          classes={classes}
           open={this.state.open}
           onClose={this.handlePreviewClose}
-          aria-labelledby='preview-email-dialog'
-        >
-          <DialogContent>
-            <DialogContentText>
-              You can change the size of the dialog to suit different devices:
-            </DialogContentText>
-            <form className={classes.form} noValidate>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor='max-width'>Width</InputLabel>
-                <Select
-                  value={modalMaxWidth}
-                  onChange={this.handleMaxWidthChange}
-                  inputProps={{
-                    name: 'max-width',
-                    id: 'max-width',
-                  }}
-                >
-                  <MenuItem value={false}>false</MenuItem>
-                  <MenuItem value='xs'>xs</MenuItem>
-                  <MenuItem value='sm'>sm</MenuItem>
-                  <MenuItem value='md'>md</MenuItem>
-                  <MenuItem value='lg'>lg</MenuItem>
-                  <MenuItem value='xl'>xl</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControlLabel
-                className={classes.formControlLabel}
-                control={
-                  <Switch
-                    checked={modalFullWidth}
-                    onChange={this.handleFullWidthChange}
-                    value='fullWidth'
-                  />
-                }
-                label='Full width'
-              />
-            </form>
-            <Paper style={{ padding: '10px 20px 20px 20px' }}>
-              <div dangerouslySetInnerHTML={{ __html: template.HtmlPart }} />
-            </Paper>
-          </DialogContent>
-        </Dialog>
+        />
       </Fragment>
     )
   }
