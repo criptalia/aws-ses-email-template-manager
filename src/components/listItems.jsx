@@ -9,7 +9,7 @@ import {
 import {
   AirlineSeatIndividualSuite as LogoutIcon,
   Email as EmailIcon,
-} from '@material-ui/icons/Email'
+} from '@material-ui/icons'
 
 export const mainListItems = (
   <Link to='/templates' style={{ textDecoration: 'none', color: '#000' }}>

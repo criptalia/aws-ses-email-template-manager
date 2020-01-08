@@ -105,19 +105,19 @@ class TemplateForm extends PureComponent {
 
   increaseFontSize = () => {
     this.setState({
-      fontSize: this.fontSize++,
+      fontSize: this.state.fontSize + 1,
     })
   }
 
   decreaseFontSize = () => {
     this.setState({
-      fontSize: this.fontSize--,
+      fontSize: this.state.fontSize - 1,
     })
   }
 
   defaultFontSize = () => {
     this.setState({
-      fontSize: this.DEFAULT_FONT_SIZE,
+      fontSize: DEFAULT_FONT_SIZE,
     })
   }
 
