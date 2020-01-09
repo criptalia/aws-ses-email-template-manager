@@ -1,8 +1,8 @@
-import React from "react";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import blue from "@material-ui/core/colors/blue";
-import lime from "@material-ui/core/colors/lime";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import React from 'react'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import blue from '@material-ui/core/colors/blue'
+import lime from '@material-ui/core/colors/lime'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 // A theme with custom primary and secondary color.
 // It's optional.
@@ -11,18 +11,18 @@ const theme = createMuiTheme({
     primary: {
       light: blue[300],
       main: blue[500],
-      dark: blue[700]
+      dark: blue[700],
     },
     secondary: {
       light: lime[300],
       main: lime[500],
-      dark: lime[700]
-    }
+      dark: lime[700],
+    },
   },
   typography: {
-    useNextVariants: true
-  }
-});
+    useNextVariants: true,
+  },
+})
 
 function withRoot(Component) {
   function WithRoot(props) {
@@ -34,10 +34,10 @@ function withRoot(Component) {
         <CssBaseline />
         <Component {...props} />
       </MuiThemeProvider>
-    );
+    )
   }
 
-  return WithRoot;
+  return WithRoot
 }
 
-export default withRoot;
+export default withRoot

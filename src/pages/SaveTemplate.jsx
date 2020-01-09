@@ -1,98 +1,98 @@
-import React, { PureComponent, Fragment } from "react";
-import AWS from "aws-sdk";
-import { TemplateForm, Title } from "../components";
-import { withRouter } from "react-router-dom";
+import React, { PureComponent, Fragment } from 'react'
+import AWS from 'aws-sdk'
+import { TemplateForm, Title } from '../components'
+import { withRouter } from 'react-router-dom'
 
 const ses = new AWS.SES({
   region: process.env.REACT_APP_REGION,
   accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
-});
+  secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+})
 
 const FORM_STATUS = Object.freeze({
-  CREATE: "CREATE",
-  EDIT: "EDIT"
-});
+  CREATE: 'CREATE',
+  EDIT: 'EDIT',
+})
 
-const LABEL_CREATE_TEMPLATE = "Crear Template";
-const LABEL_EDIT_TEMPLATE = "Editar Template";
+const LABEL_CREATE_TEMPLATE = 'Create Template'
+const LABEL_EDIT_TEMPLATE = 'Edit Template'
 
 class SaveTemplate extends PureComponent {
   state = {
     selectedTemplate: null,
     formStatus: FORM_STATUS.CREATE,
     success: false,
-    errorMessage: ""
-  };
+    errorMessage: '',
+  }
 
   componentDidMount() {
-    const { match } = this.props;
+    const { match } = this.props
 
     if (match.params.name) {
-      this.getTemplate(match.params.name);
+      this.getTemplate(match.params.name)
     }
   }
 
-  getTemplate = templateName => {
-    const { history } = this.props;
+  getTemplate = (templateName) => {
+    const { history } = this.props
     ses.getTemplate({ TemplateName: templateName }, (err, data) => {
       if (err) {
-        history.push("/404");
+        history.push('/404')
       } else {
         this.setState({
           selectedTemplate: data.Template,
-          formStatus: FORM_STATUS.EDIT
-        });
+          formStatus: FORM_STATUS.EDIT,
+        })
       }
-    });
-  };
+    })
+  }
 
-  handleSubmit = async template => {
-    const { formStatus } = this.state;
+  handleSubmit = async (template) => {
+    const { formStatus } = this.state
 
     var params = {
       Template: {
         TemplateName: template.TemplateName,
         HtmlPart: template.HtmlPart,
         SubjectPart: template.SubjectPart,
-        TextPart: template.TextPart
-      }
-    };
+        TextPart: template.TextPart,
+      },
+    }
     if (formStatus === FORM_STATUS.CREATE) {
       ses.createTemplate(params, (err, data) => {
         if (err) {
-          this.setError(err.message);
+          this.setError(err.message)
         } else {
-          this.handleSuccess(data);
+          this.handleSuccess(data)
         }
-      });
+      })
     } else {
       ses.updateTemplate(params, (err, data) => {
         if (err) {
-          this.setError(err.message);
+          this.setError(err.message)
         } else {
-          this.handleSuccess(data);
+          this.handleSuccess(data)
         }
-      });
+      })
     }
-  };
+  }
 
-  setError = errorMessage => {
+  setError = (errorMessage) => {
     this.setState({
-      errorMessage: errorMessage
-    });
-  };
+      errorMessage: errorMessage,
+    })
+  }
 
-  handleSuccess = data => {
-    const { history } = this.props;
+  handleSuccess = (data) => {
+    const { history } = this.props
     this.setState({ success: true }, () => {
-      history.push("/templates");
-    });
-  };
+      history.push('/templates')
+    })
+  }
 
   render() {
-    const { selectedTemplate, formStatus, success } = this.state;
-    const isCreate = formStatus === FORM_STATUS.CREATE;
+    const { selectedTemplate, formStatus, success } = this.state
+    const isCreate = formStatus === FORM_STATUS.CREATE
 
     return (
       <Fragment>
@@ -105,8 +105,8 @@ class SaveTemplate extends PureComponent {
           success={success}
         />
       </Fragment>
-    );
+    )
   }
 }
 
-export default withRouter(SaveTemplate);
+export default withRouter(SaveTemplate)
