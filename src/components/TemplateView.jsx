@@ -20,7 +20,6 @@ const TemplateView = ({ open, onClose, template, classes }) => {
   const handleMaxWidthChange = (event) => {
     setModalMaxWidth(event.target.value)
   }
-
   const handleFullWidthChange = () => {
     setModalFullWidth(!modalFullWidth)
   }
@@ -69,7 +68,7 @@ const TemplateView = ({ open, onClose, template, classes }) => {
           />
         </form>
         <Paper style={{ padding: '10px 20px 20px 20px' }}>
-          <div dangerouslySetInnerHTML={{ __html: template.HtmlPart }} />
+          <div dangerouslySetInnerHTML={{ __html: template }} />
         </Paper>
         <Paper>
           <TemplateSend template={template} />
