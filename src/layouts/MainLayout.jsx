@@ -18,7 +18,7 @@ import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
 } from '@material-ui/icons'
-import { mainListItems, secondaryListItems } from '../components/listItems'
+import { mainListItems } from '../components/listItems'
 
 const drawerWidth = 240
 
@@ -156,8 +156,6 @@ export default function MainLayout({ children }) {
         </div>
         <Divider />
         <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

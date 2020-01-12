@@ -4,10 +4,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListSubheader,
 } from '@material-ui/core'
 import {
-  AirlineSeatIndividualSuite as LogoutIcon,
   Email as EmailIcon,
 } from '@material-ui/icons'
 
@@ -20,16 +18,4 @@ export const mainListItems = (
       <ListItemText primary='Templates' />
     </ListItem>
   </Link>
-)
-
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Other options</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <LogoutIcon />
-      </ListItemIcon>
-      <ListItemText primary='Close session' />
-    </ListItem>
-  </div>
 )
