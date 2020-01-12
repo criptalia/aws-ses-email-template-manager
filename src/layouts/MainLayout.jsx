@@ -87,11 +87,11 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
   },
   paper: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
@@ -160,7 +160,7 @@ export default function MainLayout({ children }) {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth='lg' className={classes.container}>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
               <Paper className={classes.paper}>{children}</Paper>
             </Grid>
