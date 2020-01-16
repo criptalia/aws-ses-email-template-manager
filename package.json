@@ -7,12 +7,14 @@
     "@material-ui/icons": "^4.2.1",
     "aws-sdk": "^2.421.0",
     "clsx": "^1.0.4",
+    "html-format": "^1.0.1",
     "react": "^16.8.4",
     "react-ace": "^6.4.0",
     "react-dom": "^16.8.4",
     "react-infinite-scroller": "^1.2.4",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "turndown": "^5.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

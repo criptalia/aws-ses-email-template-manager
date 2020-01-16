@@ -19,7 +19,7 @@ import {
   IconButton,
 } from '@material-ui/core'
 import {
-  BeachAccess as BeachAccessIcon,
+  Web as TemplateIcon,
   DeleteTwoTone as DeleteIcon,
 } from '@material-ui/icons'
 
@@ -63,7 +63,7 @@ class TemplateList extends Component {
         >
           <ListItemAvatar>
             <Avatar>
-              <BeachAccessIcon />
+              <TemplateIcon />
             </Avatar>
           </ListItemAvatar>
           <ListItemText

@@ -6,11 +6,9 @@ const TemplateSend = ({ template }) => {
     return <span>Loading...</span>
   }
 
-  const vars = template.HtmlPart.match(/{{\s*[\w\.]+\s*}}/g).map(function(x) {
-    return x.match(/[\w\.]+/)[0]
-  })
+  const vars = template.match(/{{\s*[\w\.]+\s*}}/g)
+  if (vars) return vars.map((x) => x.match(/[\w\.]+/)[0])
 
-  console.log(vars)
   return (
     <Fragment>
       {'Extracted elements: '}
