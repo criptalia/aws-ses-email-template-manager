@@ -1,11 +1,19 @@
 # AWS SES Email Template Manager
 
-Simple CRUD (Create, Read, Update, Delete) Web Application to manage AWS SES email templates.
-See the live [demo](https://aws-ses-manager-demo.herokuapp.com/).
+Simple Web Application to manage AWS SES email templates.
 
-[![license](https://camo.githubusercontent.com/76f0e887c183ccc31c1cb63c33d2dbf48cb2df51/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c6963656e73652d4d49542d677265656e2e737667)](https://github.com/aprendiendola/aws-ses-email-template-manager/blob/master/LICENSE)
+- Connects to your AWS SES account
+- Let's you create new templates, edit or delete the existing ones
+- HTML Editor and side-by-side instant preview
+- Enhanced editor: format HTML, word-wrap, change font size
+- Extract the text from the HTML and copy to the template text part
 
-<div style="text-align:center"><img src ="https://i.imgur.com/70HVE7O.png" /></div>
+
+![ASW SES Email Template Manager Screenshot: Template List](https://criptalia.global.ssl.fastly.net/directus/screenshot-2020-01-18-at-00.54.11.png)
+
+![ASW SES Email Template Manager Screenshot: Template Editor with preview](https://criptalia.global.ssl.fastly.net/directus/screenshot-2020-01-18-at-01.16.11.png)
+
+![Real Time Editor](https://criptalia.global.ssl.fastly.net/directus/aws-ses-animation.gif)
 
 ## Getting Started
 
@@ -13,7 +21,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- An AWS Account
+- An AWS Account with access to SES Templates
 - NodeJS
 
 ### Installing
@@ -26,7 +34,7 @@ Copy .env.example to .env
 
 `cp .env.example .env`
 
-Setup your environment variables
+Setup your environment variables on your `.env` file
 
 `REACT_APP_REGION=`
 `REACT_APP_AWS_ACCESS_KEY_ID=`
@@ -36,27 +44,15 @@ Run the application
 
 `yarn start`
 
-## Running the tests
-
-Upcomming...
-
 ## Deployment
 
 To deploy this application to production, you may consider implement an authentication mechanism.
-
-## Built With
-
-- [ReactJS](https://reactjs.org/) - We love it!
-- [Material UI](https://material-ui.com/) - React components that implement Google's Material Design
-- [AWS-SDK](https://www.npmjs.com/package/aws-sdk) - NPM package
 
 ## Authors
 
 Based on the work of:
 - **Gian Ramirez** [zendostrike](https://github.com/zendostrike)
 
-See also the list of [contributors](https://github.com/aprendiendola/aws-ses-email-template-manager/contributors) who participated in this project.
-
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details

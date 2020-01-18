@@ -9,10 +9,7 @@ import {
   Switch,
   FormControlLabel,
   ButtonGroup,
-  Box,
   Grid,
-  Tabs,
-  Tab,
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
@@ -29,26 +26,14 @@ import 'brace/theme/monokai'
 import styles from './TemplateFormStyles'
 import TurndownService from 'turndown'
 import format from 'html-format'
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props
-
-  return (
-    <Typography
-      component='div'
-      role='tabpanel'
-      hidden={value !== index}
-      id={`nav-tabpanel-${index}`}
-      aria-labelledby={`nav-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={3}>{children}</Box>}
-    </Typography>
-  )
-}
+import SplitPane from 'react-split-pane'
+import Title from './Title'
+import TemplateSend from './TemplateSend'
 
 const TemplateForm = (props) => {
   const DEFAULT_FONT_SIZE = 12
+  const LABEL_CREATE_TEMPLATE = 'Create Template'
+  const LABEL_EDIT_TEMPLATE = 'Edit Template'
 
   const [templateName, setTemplateName] = useState('')
   const [subjectPart, setSubjectPart] = useState('')
@@ -57,12 +42,6 @@ const TemplateForm = (props) => {
 
   const [wrap, setWrap] = useState(true)
   const [fontSize, setFontSize] = useState(DEFAULT_FONT_SIZE)
-
-  const [tabValue, setTabValue] = React.useState(0)
-
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue)
-  }
 
   useEffect(() => {
     if (props.template) {
@@ -81,8 +60,6 @@ const TemplateForm = (props) => {
       TextPart: textPart,
       HtmlPart: htmlPart,
     }
-    console.log('onSubmit!')
-    console.log(template)
     props.onSubmit(template)
   }
 
@@ -101,6 +78,7 @@ const TemplateForm = (props) => {
 
   const copyText = () => {
     const tdService = new TurndownService()
+    tdService.remove('style')
     const md = tdService.turndown(htmlPart)
     setTextPart(md)
   }
@@ -113,6 +91,27 @@ const TemplateForm = (props) => {
 
   return (
     <Fragment>
+      <div
+        style={{
+          marginTop: 5,
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <div>
+          <Title>
+            {isCreate ? LABEL_CREATE_TEMPLATE : LABEL_EDIT_TEMPLATE}
+          </Title>
+        </div>
+        <div>
+          <Fab color='primary' onClick={handleSubmit}>
+            {success ? <CheckIcon /> : <SaveIcon />}
+          </Fab>
+        </div>
+        {loadingSubmit && (
+          <CircularProgress size={68} className={classes.fabProgress} />
+        )}
+      </div>
       <form onSubmit={(e) => handleSubmit(e)}>
         <Grid container spacing={2}>
           <Grid item sm={12} md={4}>
@@ -147,44 +146,8 @@ const TemplateForm = (props) => {
             />
           </Grid>
         </Grid>
-        <ExpansionPanel>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1a-content'
-            id='panel1a-header'
-          >
-            <Typography className={classes.heading}>Text part</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <TextField
-              id='textPart'
-              label='TextPart'
-              className={classes.textField}
-              value={textPart}
-              margin='normal'
-              variant='outlined'
-              onChange={(e) => {
-                setTextPart(e.target.value)
-              }}
-              rowsMax='6'
-              multiline
-            />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </form>
-      <Tabs
-        value={tabValue}
-        indicatorColor='primary'
-        textColor='primary'
-        onChange={handleTabChange}
-        aria-label='Template Tabs'
-      >
-        <Tab label='Editor' />
-        <Tab label='Preview' />
-      </Tabs>
-      <TabPanel value={tabValue} index={0}>
-        <Grid container spacing={2}>
-          <Grid item sm={12}>
+        <SplitPane split='vertical'>
+          <div>
             <div
               style={{
                 marginTop: 5,
@@ -231,25 +194,43 @@ const TemplateForm = (props) => {
                 wrap: wrap,
                 blockScrolling: 'Infinity',
               }}
+              height='80vh'
             />
-          </Grid>
-        </Grid>
-      </TabPanel>
-      <TabPanel value={tabValue} index={1}>
-        <TemplateView template={htmlPart} classes={classes} />
-      </TabPanel>
+          </div>
+          <div>
+            <TemplateView template={htmlPart} classes={classes} />
+          </div>
+        </SplitPane>
+        <ExpansionPanel>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls='panel1a-content'
+            id='panel1a-header'
+          >
+            <Typography className={classes.heading}>Text part</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <TextField
+              id='textPart'
+              label='TextPart'
+              className={classes.textField}
+              value={textPart}
+              margin='normal'
+              variant='outlined'
+              onChange={(e) => {
+                setTextPart(e.target.value)
+              }}
+              rowsMax='10'
+              multiline
+            />
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      </form>
+      <TemplateSend template={htmlPart} />
       <div className={classes.buttonContainer}>
         <Typography className={classes.errorMessage} variant='subtitle2'>
           {errorMessage}
         </Typography>
-        <div className={classes.wrapper}>
-          <Fab color='primary' onClick={handleSubmit}>
-            {success ? <CheckIcon /> : <SaveIcon />}
-          </Fab>
-          {loadingSubmit && (
-            <CircularProgress size={68} className={classes.fabProgress} />
-          )}
-        </div>
       </div>
     </Fragment>
   )

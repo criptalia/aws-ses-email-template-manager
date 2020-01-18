@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import clsx from 'clsx'
 import {
   makeStyles,
@@ -11,8 +11,6 @@ import {
   Divider,
   IconButton,
   Container,
-  Grid,
-  Paper,
 } from '@material-ui/core'
 import {
   Menu as MenuIcon,
@@ -103,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MainLayout({ children }) {
   const classes = useStyles()
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = useState(false)
   const handleDrawerOpen = () => {
     setOpen(true)
   }
@@ -143,11 +141,11 @@ export default function MainLayout({ children }) {
         </Toolbar>
       </AppBar>
       <Drawer
-        variant='permanent'
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
         open={open}
+        onClose={handleDrawerClose}
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
@@ -159,12 +157,8 @@ export default function MainLayout({ children }) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth='lg' className={classes.container}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>{children}</Paper>
-            </Grid>
-          </Grid>
+        <Container maxWidth='xl' className={classes.container}>
+          {children}
         </Container>
       </main>
     </div>
