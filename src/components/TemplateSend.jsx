@@ -7,12 +7,19 @@ const TemplateSend = ({ template }) => {
   }
 
   const vars = template.match(/{{\s*[\w\.]+\s*}}/g)
-  if (vars) return vars.map((x) => x.match(/[\w\.]+/)[0])
+  if (!vars) return null
 
+  const keys = vars.map((x) => x.match(/[\w\.]+/)[0])
+  const uniqueKeys = [...new Set(keys)]
   return (
     <Fragment>
       {'Extracted elements: '}
-      <tt dangerouslySetInnerHTML={{ __html: vars }} />
+      {uniqueKeys.map((el, index) => (
+        <Fragment>
+          <label>{el}</label>
+          <input key={index} type='text' name={el}></input>
+        </Fragment>
+      ))}
     </Fragment>
   )
 }

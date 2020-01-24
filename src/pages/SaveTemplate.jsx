@@ -1,6 +1,6 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent } from 'react'
 import AWS from 'aws-sdk'
-import { TemplateForm, Title } from '../components'
+import { TemplateForm } from '../components'
 import { withRouter } from 'react-router-dom'
 
 const ses = new AWS.SES({
@@ -13,9 +13,6 @@ const FORM_STATUS = Object.freeze({
   CREATE: 'CREATE',
   EDIT: 'EDIT',
 })
-
-const LABEL_CREATE_TEMPLATE = 'Create Template'
-const LABEL_EDIT_TEMPLATE = 'Edit Template'
 
 class SaveTemplate extends PureComponent {
   state = {
@@ -95,16 +92,13 @@ class SaveTemplate extends PureComponent {
     const isCreate = formStatus === FORM_STATUS.CREATE
 
     return (
-      <Fragment>
-        <Title>{isCreate ? LABEL_CREATE_TEMPLATE : LABEL_EDIT_TEMPLATE}</Title>
-        <TemplateForm
-          template={selectedTemplate}
-          isCreate={isCreate}
-          onSubmit={this.handleSubmit}
-          pushTemplate={this.pushTemplate}
-          success={success}
-        />
-      </Fragment>
+      <TemplateForm
+        template={selectedTemplate}
+        isCreate={isCreate}
+        onSubmit={this.handleSubmit}
+        pushTemplate={this.pushTemplate}
+        success={success}
+      />
     )
   }
 }

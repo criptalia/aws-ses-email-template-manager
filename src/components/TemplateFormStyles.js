@@ -2,7 +2,6 @@ import { red, green } from '@material-ui/core/colors'
 
 export default (theme) => ({
   appContainer: {
-    maxWidth: 950,
     margin: theme.spacing(1),
     padding: theme.spacing(4),
   },
